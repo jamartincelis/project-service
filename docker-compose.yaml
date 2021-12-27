@@ -11,4 +11,3 @@ services:
             - .:/code
         env_file:
             - '.env'
-        network_mode: host
