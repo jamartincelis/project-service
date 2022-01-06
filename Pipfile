@@ -12,6 +12,7 @@ sentry-sdk = "*"
 requests = "*"
 pendulum = "*"
 django-cors-headers = "*"
+django-rest-swagger = "*"
 
 [dev-packages]
 

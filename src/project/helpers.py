@@ -15,7 +15,7 @@ def validate_accounts(data):
     de otro modo se denega, como la asignación de cuentas en la creación de metas por ejemplo.
     """
     core_url = environ.get('CORE_SERVICE_URL')
-    validation_path = 'validate-user-accounts/'
+    validation_path = 'users/validate-user-accounts/'
     accounts = []
     if 'from_account' in data and data['from_account'] is not None:
         accounts.append(data['from_account'])
@@ -28,7 +28,7 @@ def validate_accounts(data):
             if r.status_code == 200:
                 return True
             else:
-                return Response('Bad request', status=status.HTTP_400_BAD_REQUEST)
+                return Response(r.text, status=status.HTTP_400_BAD_REQUEST)
         except requests.exceptions.RequestException:
             return Response('Service unavailable', status=status.HTTP_503_SERVICE_UNAVAILABLE)
     else:
@@ -63,3 +63,25 @@ def get_catalog(catalog_name):
         return requests.get(catalog_url+'?catalog={}'.format(catalog_name)).json()
     except requests.exceptions.RequestException:
         return {}
+
+
+def validate_rules(data_rules_list=None, user = None):
+    """
+    Valida un conjuntos re reglas
+    """
+    if data_rules_list:
+        is_valid = []
+        rules = []
+        for rule in data_rules_list:
+            # assign uuids
+            rule['user'] = user
+            rule['project'] = project.id
+            
+            model_serializer = RuleModelSerializer(data=rule)
+            is_valid.append(model_serializer.is_valid())
+            
+            # assign project instance
+            rule['project'] = project
+            rules.append(rule)
+        return all(is_valid)
+    return Response('Bad request', status=status.HTTP_400_BAD_REQUEST)
