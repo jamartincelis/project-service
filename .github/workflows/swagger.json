@@ -98,7 +98,6 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Pet"
                             },
                             "examples": {
                                 "dog": {
