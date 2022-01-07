@@ -96,6 +96,10 @@
                     "text": {
                         "type": "string",
                         "description": "Message text"
+                    },
+                    "first_name": {
+                        "type": "string",
+                        "description": "Message text"
                     }
                 },
                 "required": [
