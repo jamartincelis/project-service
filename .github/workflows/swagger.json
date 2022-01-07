@@ -64,9 +64,7 @@
                 "tags": [
                     "projects"
                 ]
-            }
-        },
-        "/user/{user}/projects/": {
+            },
             "post": {
                 "operationId": "new_project_with_no_rules",
                 "description": "",
