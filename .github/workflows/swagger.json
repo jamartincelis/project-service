@@ -91,7 +91,7 @@
                                 }
                             }
                         },
-                        "description": "Get projects by user id"
+                        "description": "Create new project with no rules"
                     }
                 },
                 {
