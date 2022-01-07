@@ -93,22 +93,23 @@
                     }
                 },
                 "requestBody": {
+                    "required": true,
                     "content": {
-                        "application/json": {
+                        "application/x-www-form-urlencoded": {
                             "schema": {
-                            },
-                            "examples": {
-                                "dog": {
-                                    "summary": "An example of a dog",
-                                    "value": {
-                                        "name": "Fluffy",
-                                        "petType": "dog"
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "fav_number": {
+                                        "type": "integer"
                                     }
                                 },
-                                "cat": {
-                                    "summary": "An example of a cat",
-                                    "externalValue": "http://api.example.com/examples/cat.json"
-                                }
+                                "required": [
+                                    "name",
+                                    "email"
+                                ]
                             }
                         }
                     }
