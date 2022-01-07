@@ -1,0 +1,60 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "Xerpa config-service",
+        "version": "v1.0.0"
+    },
+    "servers": [
+        {
+            "url": "https://widgets.getxerpa.com/project-service/"
+        }
+    ],
+    "paths": {
+        "/monitoring/health-check/": {
+            "get": {
+                "operationId": "health_check",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {}
+                                }
+                            }
+                        },
+                        "description": "Health check endpoint"
+                    }
+                },
+                "tags": [
+                    "monitoring"
+                ]
+            }
+        },
+        "user/{user}/projects/": {
+            "get": {
+                "operationId": "get_projects_by_user",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {}
+                                }
+                            }
+                        },
+                        "description": "Health check endpoint"
+                    }
+                },
+                "tags": [
+                    "monitoring"
+                ]
+            }
+        }
+    }
+}
