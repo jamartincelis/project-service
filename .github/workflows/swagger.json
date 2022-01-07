@@ -99,16 +99,40 @@
                             "schema": {
                                 "type": "object",
                                 "properties": {
+                                    "user": {
+                                        "type": "string"
+                                    },
+                                    "category": {
+                                        "type": "string"
+                                    },
+                                    "goal_date": {
+                                        "type": "string"
+                                    },
+                                    "total": {
+                                        "type": "float"
+                                    },
+                                    "from_account": {
+                                        "type": "string"
+                                    },
+                                    "to_account": {
+                                        "type": "string"
+                                    },
                                     "name": {
                                         "type": "string"
                                     },
-                                    "fav_number": {
-                                        "type": "integer"
+                                    "rules_list": {
+                                        "type": "array"
                                     }
                                 },
                                 "required": [
+                                    "user",
+                                    "category",
+                                    "goal_date",
+                                    "total",
+                                    "from_account",
+                                    "to_account",
                                     "name",
-                                    "email"
+                                    "rules_list"
                                 ]
                             }
                         }
