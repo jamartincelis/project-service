@@ -1,0 +1,96 @@
+openapi: 3.0.1
+info:
+  title: Xerpa project-service
+  version: v1.0.0
+servers:
+- url: https://widgets.getxerpa.com/project-service/
+paths:
+  "/monitoring/health-check/":
+    get:
+      operationId: health_check
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {}
+          description: Health check endpoint
+      tags:
+      - monitoring
+  "/user/{user}/projects/":
+    get:
+      operationId: get_projects_by_user
+      description: Get projects by user id
+      parameters:
+      - in: path
+        name: user
+        schema:
+          type: string
+        required: true
+        description: UUID of the user
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {}
+          description: ''
+      tags:
+      - projects
+    post:
+      operationId: create_new_project
+      description: Create new project
+      parameters:
+      - in: path
+        name: user
+        schema:
+          type: string
+        required: true
+        description: UUID of the user
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {}
+          description: ''
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: string
+                category:
+                  type: string
+                goal_date:
+                  type: string
+                total:
+                  type: float
+                from_account:
+                  type: string
+                to_account:
+                  type: string
+                name:
+                  type: string
+                rules_list:
+                  type: array
+                  items: {}
+              required:
+                  - user
+                  - category
+                  - goal_date
+                  - total
+                  - from_account
+                  - to_account
+                  - name
+                  - rules_list
+      tags:
+        - projects
