@@ -94,33 +94,31 @@
                         "description": "Create new project with no rules"
                     }
                 },
-                {
-                   "requestBody": {
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Pet"
-                                },
-                                "examples": {
-                                    "dog": {
-                                        "summary": "An example of a dog",
-                                        "value": {
-                                            "name": "Fluffy",
-                                            "petType": "dog"
-                                        }
-                                    },
-                                    "cat": {
-                                        "summary": "An example of a cat",
-                                        "externalValue": "http://api.example.com/examples/cat.json"
-                                    },
-                                    "hamster": {
-                                        "$ref": "#/components/examples/hamster"
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Pet"
+                            },
+                            "examples": {
+                                "dog": {
+                                    "summary": "An example of a dog",
+                                    "value": {
+                                        "name": "Fluffy",
+                                        "petType": "dog"
                                     }
+                                },
+                                "cat": {
+                                    "summary": "An example of a cat",
+                                    "externalValue": "http://api.example.com/examples/cat.json"
+                                },
+                                "hamster": {
+                                    "$ref": "#/components/examples/hamster"
                                 }
                             }
                         }
-                    },
-                }
+                    }
+                },
                 "tags": [
                     "projects"
                 ]
