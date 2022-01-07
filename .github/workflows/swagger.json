@@ -1,0 +1,107 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "Xerpa project-service",
+        "version": "v1.0.0"
+    },
+    "servers": [
+        {
+            "url": "https://widgets.getxerpa.com/project-service/"
+        }
+    ],
+    "paths": {
+        "/monitoring/health-check/": {
+            "get": {
+                "operationId": "health_check",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {}
+                                }
+                            }
+                        },
+                        "description": "Health check endpoint"
+                    }
+                },
+                "tags": [
+                    "monitoring"
+                ]
+            }
+        },
+        "/user/{userID}/projects/": {
+            "get": {
+                "operationId": "get_projects_by_user",
+                "description": "",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "userID",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true,
+                        "description": "UUID of the user"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {}
+                                }
+                            }
+                        },
+                        "description": "Get projects by userID"
+                    }
+                },
+                "tags": [
+                    "projects"
+                ]
+            },
+            "post": {
+                "summary": "Post a message to Slack",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Project"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    }
+                },
+                "tags": [
+                    "projects"
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Project": {
+                "title": "A Slack message",
+                "type": "object",
+                "properties": {
+                    "text": {
+                        "type": "string",
+                        "description": "Message text"
+                    }
+                },
+                "required": [
+                    "text"
+                ]
+            }
+        }
+    }
+}
