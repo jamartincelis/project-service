@@ -119,9 +119,6 @@
                                     },
                                     "name": {
                                         "type": "string"
-                                    },
-                                    "rules_list": {
-                                        "type": "array"
                                     }
                                 },
                                 "required": [
@@ -131,8 +128,7 @@
                                     "total",
                                     "from_account",
                                     "to_account",
-                                    "name",
-                                    "rules_list"
+                                    "name"
                                 ]
                             }
                         }
