@@ -1,7 +1,7 @@
 {
     "openapi": "3.0.1",
     "info": {
-        "title": "Xerpa config-service",
+        "title": "Xerpa project-service",
         "version": "v1.0.0"
     },
     "servers": [
@@ -33,7 +33,7 @@
                 ]
             }
         },
-        "user/{user}/projects/": {
+        "/user/{user}/projects/": {
             "get": {
                 "operationId": "get_projects_by_user",
                 "description": "",
@@ -48,11 +48,11 @@
                                 }
                             }
                         },
-                        "description": "Health check endpoint"
+                        "description": "Get projects by user id"
                     }
                 },
                 "tags": [
-                    "monitoring"
+                    "projects"
                 ]
             }
         }
