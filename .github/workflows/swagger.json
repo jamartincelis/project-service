@@ -65,6 +65,66 @@
                     "projects"
                 ]
             }
+        },
+        "/user/{user}/projects/": {
+            "post": {
+                "operationId": "new_project_with_no_rules",
+                "description": "",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "user",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true,
+                        "description": "UUID of the user"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {}
+                                }
+                            }
+                        },
+                        "description": "Get projects by user id"
+                    }
+                },
+                {
+                   "requestBody": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Pet"
+                                },
+                                "examples": {
+                                    "dog": {
+                                        "summary": "An example of a dog",
+                                        "value": {
+                                            "name": "Fluffy",
+                                            "petType": "dog"
+                                        }
+                                    },
+                                    "cat": {
+                                        "summary": "An example of a cat",
+                                        "externalValue": "http://api.example.com/examples/cat.json"
+                                    },
+                                    "hamster": {
+                                        "$ref": "#/components/examples/hamster"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                }
+                "tags": [
+                    "projects"
+                ]
+            }
         }
     }
 }
