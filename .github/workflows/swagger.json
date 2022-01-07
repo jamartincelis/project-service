@@ -37,7 +37,17 @@
             "get": {
                 "operationId": "get_projects_by_user",
                 "description": "",
-                "parameters": [],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "user",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true,
+                        "description": "UUID of the user"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "content": {
