@@ -110,9 +110,6 @@
                                 "cat": {
                                     "summary": "An example of a cat",
                                     "externalValue": "http://api.example.com/examples/cat.json"
-                                },
-                                "hamster": {
-                                    "$ref": "#/components/examples/hamster"
                                 }
                             }
                         }
