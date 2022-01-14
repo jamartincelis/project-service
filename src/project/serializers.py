@@ -7,6 +7,9 @@ from rest_framework import serializers
 from project.models import Project
 from project.helpers import catalog_to_dict
 
+from rule.serializers import RuleFrontSerializer
+from rule.models import Rule
+
 
 class ProjectFrontSerializer(serializers.ModelSerializer):
     """
@@ -15,6 +18,7 @@ class ProjectFrontSerializer(serializers.ModelSerializer):
 
     category = serializers.SerializerMethodField()
     project_type = catalog_to_dict('project_type')
+    rules_list = RuleFrontSerializer(read_only=True)
 
     class Meta:
         model = Project
@@ -33,3 +37,12 @@ class ProjectModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
         fields = '__all__'
+
+
+class AuxiliaryRuleModelSerializer(serializers.ModelSerializer):
+    """
+    Serializador auxiliar para el modelo de reglas
+    """
+    class Meta:
+        model = Rule
+        exclude = ('project', 'user')

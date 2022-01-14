@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'monitoring',
-    'project'
+    'project',
+    'rule'
 ]
 
 MIDDLEWARE = [

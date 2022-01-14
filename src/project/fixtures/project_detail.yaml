@@ -1,9 +1,9 @@
 - model: 'project.Project'
   fields:
-    id: '3cb17971-e530-4070-b37f-c7b164699295'
+    id: '3cb17971-e530-4070-b37f-c7b164699285'
     user: '0390a508-dba5-4344-b77f-93e1227d42f4'
     status: 'd7d30bcd-8417-47c9-b294-a4ca5bfd3506'
-    category: 'eeb4ccdb-f90e-4b96-888c-d8937185d96c'
+    category: '7c1521e9-6d06-4c6e-9aa5-db4414afe71f'
     name: 'Mi meta'
     goal_date: '2022-01-01'
     deleted_at: null

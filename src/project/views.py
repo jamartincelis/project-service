@@ -6,9 +6,8 @@ from rest_framework.response import Response
 from rest_framework import status
 
 from project.models import Project
-from project.serializers import ProjectFrontSerializer, ProjectModelSerializer
-from project.helpers import validate_accounts, get_catalog
-
+from project.serializers import ProjectFrontSerializer
+from project.helpers import get_catalog, create_project, update_project
 
 class ProjectList(ListCreateAPIView):
     """
@@ -23,20 +22,13 @@ class ProjectList(ListCreateAPIView):
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request, user):
-        request.data['user'] = user
-        # Si se recibe al menos una de las cuentas para crear la meta, es necesario validar
-        # que le pertenezcan al usuario antes de crear una meta
-        validation = validate_accounts(request.data)
-        if validation is True:
-            obj = Project.objects.create(**ProjectModelSerializer(request.data).data)
-            return Response(ProjectFrontSerializer(obj).data, status=status.HTTP_201_CREATED)
-        # Si la petición no contiene cuentas ni de origen ni de destino, se crea la meta
-        # y la validación se hará al ejecutar la edición de la meta en la asignación de cuentas
-        elif validation is False:
-            project = Project.objects.create(**ProjectModelSerializer(request.data).data)
-            return Response(ProjectFrontSerializer(project).data, status=status.HTTP_201_CREATED)
-        # Se retorna cualquier error que no permita la creación de la meta (errores de red)
-        return validation
+        """
+        Permite crear una meta y sus reglas
+        """
+        data = request.data
+        data['user'] = user
+
+        return create_project(data)
 
 
 class ProjectDetail(RetrieveUpdateAPIView):
@@ -46,6 +38,8 @@ class ProjectDetail(RetrieveUpdateAPIView):
     queryset = Project.objects.all()
     serializer_class = ProjectFrontSerializer
 
+    def update(self, request, *args, **kwargs):
+        return update_project(request,kwargs)
 
 class NewProjectWidget(APIView):
 
