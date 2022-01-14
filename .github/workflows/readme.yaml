@@ -10,5 +10,5 @@ jobs:
     - uses: actions/checkout@v2
     - uses: readmeio/github-readme-sync@v2
       with:
-        readme-oas-key: vzH4jjO3HsGQxJCrWZcLzoP2Ft3N1MG8:61e19ab411d36dcc7d05032d
+        readme-oas-key: vzH4jjO3HsGQxJCrWZcLzoP2Ft3N1MG8:61e19cdc1a1c57d8f2150302
         api-version: 'v1.0.0'
