@@ -90,20 +90,44 @@
     "components": {
         "schemas": {
             "Project": {
-                "title": "A Slack message",
+                "title": "User project",
                 "type": "object",
                 "properties": {
-                    "text": {
+                    "user": {
                         "type": "string",
-                        "description": "Message text"
+                        "description": "user id"
                     },
-                    "first_name": {
+                    "category": {
                         "type": "string",
-                        "description": "Message text"
+                        "description": "Project category"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Project name"
+                    },
+                    "goal_date": {
+                        "type": "string",
+                        "description": "Project goal date"
+                    },
+                    "total": {
+                        "type": "number",
+                        "description": "Project total amount"
+                    },
+                    "from_account": {
+                        "type": "string",
+                        "description": "User account"
+                    },
+                    "to_account": {
+                        "type": "string",
+                        "description": "User account"
                     }
                 },
                 "required": [
-                    "text"
+                    "user",
+                    "category",
+                    "name",
+                    "goal_date",
+                    "total"
                 ]
             }
         }
