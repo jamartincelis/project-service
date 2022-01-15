@@ -13,10 +13,10 @@ class Rule(models.Model):
     status = models.UUIDField(db_index=True, default='65729137-0844-4b28-85b5-2e81b73a948a')
     rule_type = models.UUIDField(db_index=True, null=False)
     amount = models.DecimalField(decimal_places=2, max_digits=14)
-    day = models.PositiveSmallIntegerField(default=0)
-    onboarding = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    transaciton_category = models.UUIDField(db_index=True, null=True)
+
     # indica qué día del mes se ejecuta la regla % de sueldo  
     fix_salary_execution_day = models.PositiveSmallIntegerField(default=0)
     # indica la frecuencia de ejecucion de las reglas monto fijo y gastar menos 

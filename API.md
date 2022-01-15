@@ -6,7 +6,7 @@ Endpoints del microservicio de metas.
 
 ```bash
 curl --request GET \
-  --url http://127.0.0.1/project-service/user/0390a508-dba5-4344-b77f-93e1227d42f4/projects/health-check/
+  --url http://127.0.0.1/project-service/monitoring/health-check/
 ```
 
 ## Obtener las metas del usuario
@@ -64,10 +64,10 @@ respuesta
 
 ```bash
 curl --request POST \
-  --url http://127.0.0.1/project-service/user/0390a508-dba5-4344-b77f-93e1227d42f4/projects/3cb17971-e530-4070-b37f-c7b164699295/rules/ \
+  --url http://127.0.0.1/project-service/user/b9e605ee-4cca-400e-99c5-ae24abca97d5/projects/ \
   --header 'content-type: application/json' \
   --header 'user-agent: vscode-restclient' \
-  --data '{"rules_list" : [{"rule_type" : "01fdb81f-88ef-4f7a-bc0a-c9f66430f391","rule_category": "a34b4b3f-fb71-4e0b-b82e-beb94b79932e","amount": 19100.00},{"rule_type" : "a3125075-ff44-4b8b-be29-6c73fd846872","rule_category": "a34b4b3f-fb71-4e0b-b82e-beb94b79932e","amount": 51000.00}]}'
+  --data '{"user": "b9e605ee-4cca-400e-99c5-ae24abca97d5","category": "7c1521e9-6d06-4c6e-9aa5-db4414afe71f","goal_date": "2022-01-01","total": 5000,"from_account" : "333bb09d-26ab-4fe5-8051-6619dba1eff7","to_account" : "c80f5170-2926-4b45-af64-dfe13e24a222","name": "mi meta prueba","rules_list" : [{"rule_type" : "01fdb81f-88ef-4f7a-bc0a-c9f66430f391","amount": 19100.00},{"rule_type" : "a3125075-ff44-4b8b-be29-6c73fd846872","amount": 51000.00}]}'
 ```
 
 respuesta 

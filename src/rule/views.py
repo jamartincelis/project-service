@@ -59,11 +59,15 @@ class RuleDetail(RetrieveUpdateAPIView):
         except Project.DoesNotExist:
             return Response("Not found.", status.HTTP_404_NOT_FOUND)
 
+        try:
+            rule = Rule.objects.get(user=kwargs['user'], pk=kwargs['pk'])
+        except Rule.DoesNotExist:
+            return Response("Not found.", status.HTTP_404_NOT_FOUND)
+
         if request.method == 'PUT':
             model_serializer = RuleModelSerializer(data=request.data)
             if not model_serializer.is_valid():
                 return Response(model_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        rule = Rule.objects.get(id=kwargs['pk'])
         rule.__dict__.update(request.data)
         rule.save()
         return Response(self.serializer_class(rule).data, status=status.HTTP_200_OK)
