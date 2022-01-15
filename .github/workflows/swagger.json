@@ -2,7 +2,7 @@
     "openapi": "3.0.1",
     "info": {
         "title": "Xerpa project-service",
-        "version": "v1.0.1"
+        "version": "v1.0.0"
     },
     "servers": [
         {
@@ -12,6 +12,7 @@
     "paths": {
         "/monitoring/health-check/": {
             "get": {
+                "summary": "Health check",
                 "operationId": "health_check",
                 "description": "",
                 "parameters": [],
@@ -35,6 +36,7 @@
         },
         "/user/{userID}/projects/": {
             "get": {
+                "summary": "Get projects by user",
                 "operationId": "get_projects_by_user",
                 "description": "",
                 "parameters": [
@@ -67,6 +69,17 @@
             },
             "post": {
                 "summary": "Create new project",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "userID",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true,
+                        "description": "UUID of the user"
+                    }
+                ],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -84,18 +97,294 @@
                 "tags": [
                     "projects"
                 ]
+            },
+            "patch": {
+                "summary": "Update project",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "userID",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true,
+                        "description": "UUID of the user"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Project"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Updated"
+                    }
+                },
+                "tags": [
+                    "projects"
+                ]
+            }
+        },
+        "/user/{userID}/projects/{projectID}/rules/": {
+            "get": {
+                "summary": "Get rules by project",
+                "operationId": "get_rules_by_project",
+                "description": "",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "userID",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true,
+                        "description": "UUID of the user"
+                    },
+                    {
+                        "in": "path",
+                        "name": "projectID",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true,
+                        "description": "UUID of the project"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {}
+                                }
+                            }
+                        },
+                        "description": "Get rules by projectID"
+                    }
+                },
+                "tags": [
+                    "rules"
+                ]
+            }
+        },
+        "/user/{userID}/projects/{projectID}/rules/{ruleID}/": {
+            "get": {
+                "summary": "Get rule detail",
+                "operationId": "get_rule_detail",
+                "description": "",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "userID",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true,
+                        "description": "User ID"
+                    },
+                    {
+                        "in": "path",
+                        "name": "projectID",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true,
+                        "description": "Project ID"
+                    },
+                    {
+                        "in": "path",
+                        "name": "ruleID",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true,
+                        "description": "Rule ID"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {}
+                                }
+                            }
+                        },
+                        "description": "Get rule detail"
+                    }
+                },
+                "tags": [
+                    "rules"
+                ]
+            },
+            "patch": {
+                "summary": "Update rule",
+                "operationId": "update_rule",
+                "description": "",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "userID",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true,
+                        "description": "User ID"
+                    },
+                    {
+                        "in": "path",
+                        "name": "projectID",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true,
+                        "description": "Project ID"
+                    },
+                    {
+                        "in": "path",
+                        "name": "ruleID",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true,
+                        "description": "Rule ID"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {}
+                                }
+                            }
+                        },
+                        "description": "Update rule"
+                    }
+                },
+                "tags": [
+                    "rules"
+                ]
+            }
+        },
+        "/user/{userID}/projects/{projectID}/": {
+            "get": {
+                "summary": "Get project detail",
+                "operationId": "get_project_detail",
+                "description": "",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "userID",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true,
+                        "description": "User ID"
+                    },
+                    {
+                        "in": "path",
+                        "name": "projectID",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true,
+                        "description": "Project ID"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {}
+                                }
+                            }
+                        },
+                        "description": "Get project detail"
+                    }
+                },
+                "tags": [
+                    "projects"
+                ]
             }
         }
     },
     "components": {
         "schemas": {
+            "Rule": {
+                "title": "Project rule",
+                "type": "object",
+                "properties": {
+                    "user": {
+                        "type": "string",
+                        "description": "User ID"
+                    },
+                    "project": {
+                        "type": "string",
+                        "description": "Project ID"
+                    },
+                    "rule_type": {
+                        "type": "string",
+                        "description": "Rule type"
+                    },
+                    "amount": {
+                        "type": "number",
+                        "description": "Project goal date"
+                    },
+                    "fix_salary_execution_day": {
+                        "type": "number",
+                        "description": "Execution day for salary rule"
+                    },
+                    "execution_frequency": {
+                        "type": "string",
+                        "description": "Execution day for fixed amount rule"
+                    },
+                    "sport_team": {
+                        "type": "string",
+                        "description": "Sport team for sports rule"
+                    },
+                    "sport_conditions": {
+                        "type": "string",
+                        "description": "Configuration for sports rule"
+                    },
+                    "weather_city": {
+                        "type": "string",
+                        "description": "City for weather rule"
+                    },
+                    "temperature": {
+                        "type": "string",
+                        "description": "Configuration for weather rule"
+                    }
+                },
+                "required": [
+                    "user",
+                    "rule_type",
+                    "amount",
+                    "fix_salary_execution_day",
+                    "execution_frequency",
+                    "sport_team",
+                    "sport_conditions",
+                    "weather_city",
+                    "temperature"
+                ]
+            },
             "Project": {
                 "title": "User project",
                 "type": "object",
                 "properties": {
                     "user": {
                         "type": "string",
-                        "description": "user id"
+                        "description": "User ID"
                     },
                     "category": {
                         "type": "string",
@@ -120,6 +409,10 @@
                     "to_account": {
                         "type": "string",
                         "description": "User account"
+                    },
+                    "rules_list": {
+                        "type": "array",
+                        "$ref": "#/components/schemas/Rule"
                     }
                 },
                 "required": [
