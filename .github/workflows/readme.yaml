@@ -1,7 +1,7 @@
 name: Sync OAS to ReadMe
 on:
   push:
-    branches: [ main ]
+    branches: [ dev ]
 jobs:
   build:
     name: Build Image
