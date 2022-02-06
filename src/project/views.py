@@ -13,11 +13,13 @@ class ProjectList(ListCreateAPIView):
     """
     Devuelve un listado de metas o crea una nueva meta.
     """
-    queryset = Project.objects.all()
     serializer_class = ProjectFrontSerializer
 
+    def get_queryset(self):
+        return Project.objects.filter(user=self.kwargs['user'])
+
     def get(self, request, user):
-        projects = self.get_queryset().filter(user=user)
+        projects = self.get_queryset()
         serializer = ProjectFrontSerializer(projects, many=True)
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
@@ -35,8 +37,10 @@ class ProjectDetail(RetrieveUpdateAPIView):
     """
     Obtiene o actualiza una meta.
     """
-    queryset = Project.objects.all()
     serializer_class = ProjectFrontSerializer
+    
+    def get_queryset(self):
+        return Project.objects.filter(user=self.kwargs['user'], pk=self.kwargs['pk'])
 
     def update(self, request, *args, **kwargs):
         return update_project(request,kwargs)
