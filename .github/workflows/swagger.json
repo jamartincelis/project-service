@@ -30,14 +30,38 @@
                     }
                 },
                 "tags": [
-                    "monitoring"
+                    "Monitoreo"
                 ]
             }
         },
-        "/user/{userID}/projects/": {
+		"/monitoring/sentry/": {
+			"get": {
+				"summary": "Sentry",
+				"operationId": "sentry",
+				"description": "",
+				"parameters": [],
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {}
+								}
+							}
+						},
+						"description": "Permite determinar si el servicio está conectado con Sentry."
+					}
+				},
+				"tags": [
+					"Monitoreo"
+				]
+			}
+		},
+        "/users/{userID}/projects/": {
             "get": {
-                "summary": "Get projects by user",
-                "operationId": "get_projects_by_user",
+                "summary": "Lista de metas del usuario",
+                "operationId": "listar_metas",
                 "description": "",
                 "parameters": [
                     {
@@ -47,7 +71,8 @@
                             "type": "string"
                         },
                         "required": true,
-                        "description": "UUID of the user"
+                        "description": "UUID of the user",
+                        "example": "b9e605ee-4cca-400e-99c5-ae24abca97d5"
                     }
                 ],
                 "responses": {
@@ -60,15 +85,16 @@
                                 }
                             }
                         },
-                        "description": "Get projects by userID"
+                        "description": "Lista de metas del usuario"
                     }
                 },
                 "tags": [
-                    "projects"
+                    "Metas"
                 ]
             },
             "post": {
-                "summary": "Create new project",
+                "summary": "Crear meta",
+                "operationId": "crear_meta",
                 "parameters": [
                     {
                         "in": "path",
@@ -77,7 +103,8 @@
                             "type": "string"
                         },
                         "required": true,
-                        "description": "UUID of the user"
+                        "description": "UUID of the user",
+                        "example": "b9e605ee-4cca-400e-99c5-ae24abca97d5"
                     }
                 ],
                 "requestBody": {
@@ -85,7 +112,42 @@
                         "application/json": {
                             "schema": {
                                 "$ref": "#/components/schemas/Project"
-                            }
+                            },
+                            "examples": {
+                                "Meta sin Reglas": {
+                                  "summary": "Ejemplo de meta sin reglas",
+                                  "value": {
+                                    "category": "7c1521e9-6d06-4c6e-9aa5-db4414afe71f",
+                                    "goal_date": "2022-01-01",
+                                    "total": 5000,
+                                    "from_account" : "333bb09d-26ab-4fe5-8051-6619dba1eff7",
+                                    "to_account" : "c80f5170-2926-4b45-af64-dfe13e24a222",
+                                    "name": "mi meta prueba",   
+                                    "rules_list" : []
+                                  }
+                                },
+                                "Meta con Reglas": {
+                                    "summary": "Ejemplo de meta con reglas",
+                                    "value": {
+                                      "category": "7c1521e9-6d06-4c6e-9aa5-db4414afe71f",
+                                      "goal_date": "2022-01-01",
+                                      "total": 6000,
+                                      "from_account" : "333bb09d-26ab-4fe5-8051-6619dba1eff7",
+                                      "to_account" : "c80f5170-2926-4b45-af64-dfe13e24a222",
+                                      "name": "mi meta prueba con reglas",   
+                                      "rules_list" : [
+                                            {
+                                                "rule_type" : "01fdb81f-88ef-4f7a-bc0a-c9f66430f391",
+                                                "amount": 19100.00
+                                            },
+                                            {
+                                                "rule_type" : "a3125075-ff44-4b8b-be29-6c73fd846872",
+                                                "amount": 51000.00
+                                            }
+                                        ]   
+                                    }
+                                  }
+                              }                            
                         }
                     }
                 },
@@ -95,11 +157,15 @@
                     }
                 },
                 "tags": [
-                    "projects"
+                    "Metas"
                 ]
-            },
-            "patch": {
-                "summary": "Update project",
+            }
+        },
+        "/users/{userID}/projects/{projectID}/": {
+            "get": {
+                "summary": "Detalle de la meta",
+                "operationId": "detalle_meta",
+                "description": "",
                 "parameters": [
                     {
                         "in": "path",
@@ -108,14 +174,81 @@
                             "type": "string"
                         },
                         "required": true,
-                        "description": "UUID of the user"
+                        "description": "User ID",
+                        "example": "b9e605ee-4cca-400e-99c5-ae24abca97d5"
+                    },
+                    {
+                        "in": "path",
+                        "name": "projectID",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true,
+                        "description": "Project ID",
+                        "example": "1b18e880-4d56-4f33-82e3-79937477f008"
                     }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {}
+                                }
+                            }
+                        },
+                        "description": "Detalle de la meta"
+                    }
+                },
+                "tags": [
+                    "Metas"
+                ]
+            },
+            "patch": {
+                "summary": "Actualizar meta. Forma 1",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "userID",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true,
+                        "description": "UUID of the user",
+                        "example": "b9e605ee-4cca-400e-99c5-ae24abca97d5"
+                    },
+                    {
+                        "in": "path",
+                        "name": "projectID",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true,
+                        "description": "Project ID",
+                        "example": "1b18e880-4d56-4f33-82e3-79937477f008"
+                    }
+
                 ],
                 "requestBody": {
                     "content": {
                         "application/json": {
                             "schema": {
                                 "$ref": "#/components/schemas/Project"
+                            },
+                            "examples": {
+                                "Actualizar total": {
+                                  "summary": "Ejemplo actualizar total",
+                                  "value": {
+                                    "total": 5000
+                                  }
+                                },
+                                "Actualizar nombre": {
+                                    "summary": "Ejemplo actualizar nombre",
+                                    "value": {
+                                      "name": "Meta actualizada"
+                                    }
+                                }                                
                             }
                         }
                     }
@@ -126,9 +259,71 @@
                     }
                 },
                 "tags": [
-                    "projects"
+                    "Metas"
                 ]
-            }
+            },
+            "put": {
+                "summary": "Actualizar meta. Forma 2",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "userID",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true,
+                        "description": "UUID of the user",
+                        "example": "b9e605ee-4cca-400e-99c5-ae24abca97d5"
+                    },
+                    {
+                        "in": "path",
+                        "name": "projectID",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true,
+                        "description": "Project ID",
+                        "example": "1b18e880-4d56-4f33-82e3-79937477f008"
+                    }
+
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Project"
+                            },
+                            "examples": {
+                                "Actualizar total": {
+                                  "summary": "Ejemplo actualizar total",
+                                  "value": {
+                                        "category": "7c1521e9-6d06-4c6e-9aa5-db4414afe71f",
+                                        "goal_date": "2023-02-01",
+                                        "name": "Meta actualizada",
+                                        "total": 7000
+                                  }
+                                },
+                                "Actualizar nombre": {
+                                    "summary": "Ejemplo actualizar nombre",
+                                    "value": {
+                                        "category": "7c1521e9-6d06-4c6e-9aa5-db4414afe71f",
+                                        "goal_date": "2023-02-01",
+                                        "name": "Meta actualizada"
+                                    }
+                                }                                
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Updated"
+                    }
+                },
+                "tags": [
+                    "Metas"
+                ]
+            }                        
         },
         "/user/{userID}/projects/{projectID}/rules/": {
             "get": {
@@ -169,7 +364,7 @@
                     }
                 },
                 "tags": [
-                    "rules"
+                    "Reglas"
                 ]
             }
         },
@@ -221,7 +416,7 @@
                     }
                 },
                 "tags": [
-                    "rules"
+                    "Reglas"
                 ]
             },
             "patch": {
@@ -271,50 +466,7 @@
                     }
                 },
                 "tags": [
-                    "rules"
-                ]
-            }
-        },
-        "/user/{userID}/projects/{projectID}/": {
-            "get": {
-                "summary": "Get project detail",
-                "operationId": "get_project_detail",
-                "description": "",
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "userID",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "required": true,
-                        "description": "User ID"
-                    },
-                    {
-                        "in": "path",
-                        "name": "projectID",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "required": true,
-                        "description": "Project ID"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {}
-                                }
-                            }
-                        },
-                        "description": "Get project detail"
-                    }
-                },
-                "tags": [
-                    "projects"
+                    "Reglas"
                 ]
             }
         }
