@@ -548,10 +548,6 @@
                     "to_account": {
                         "type": "string",
                         "description": "User account"
-                    },
-                    "rules_list": {
-                        "type": "array",
-                        "$ref": "#/components/schemas/Rule"
                     }
                 },
                 "required": [
