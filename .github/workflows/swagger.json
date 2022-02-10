@@ -477,14 +477,6 @@
                 "title": "Project rule",
                 "type": "object",
                 "properties": {
-                    "user": {
-                        "type": "string",
-                        "description": "User ID"
-                    },
-                    "project": {
-                        "type": "string",
-                        "description": "Project ID"
-                    },
                     "rule_type": {
                         "type": "string",
                         "description": "Rule type"
@@ -519,7 +511,6 @@
                     }
                 },
                 "required": [
-                    "user",
                     "rule_type",
                     "amount",
                     "fix_salary_execution_day",
@@ -534,10 +525,6 @@
                 "title": "User project",
                 "type": "object",
                 "properties": {
-                    "user": {
-                        "type": "string",
-                        "description": "User ID"
-                    },
                     "category": {
                         "type": "string",
                         "description": "Project category"
@@ -568,7 +555,6 @@
                     }
                 },
                 "required": [
-                    "user",
                     "category",
                     "name",
                     "goal_date",
