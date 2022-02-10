@@ -122,8 +122,8 @@
                                     "total": 5000,
                                     "from_account" : "333bb09d-26ab-4fe5-8051-6619dba1eff7",
                                     "to_account" : "c80f5170-2926-4b45-af64-dfe13e24a222",
-                                    "name": "mi meta prueba",   
-                                    "rules_list" : []
+                                    "rules_list" : [],
+                                    "name": "mi meta prueba"
                                   }
                                 },
                                 "Meta con Reglas": {
