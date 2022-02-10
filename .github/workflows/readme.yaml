@@ -11,4 +11,4 @@ jobs:
     - uses: readmeio/github-readme-sync@v2
       with:
         readme-oas-key: vzH4jjO3HsGQxJCrWZcLzoP2Ft3N1MG8:62049255107ae4cddf967416
-        api-version: 'v1.0.0'
+        api-version: 'v1.1'
