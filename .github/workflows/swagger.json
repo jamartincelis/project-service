@@ -123,7 +123,7 @@
                                     "from_account" : "333bb09d-26ab-4fe5-8051-6619dba1eff7",
                                     "to_account" : "c80f5170-2926-4b45-af64-dfe13e24a222",
                                     "rules_list" : [],
-                                    "name": "mi meta prueba"
+                                    "name": "mi meta prueba ejemplo"
                                   }
                                 },
                                 "Meta con Reglas": {
@@ -341,7 +341,10 @@
                         "description": "UUID of the user"
                     },
                     {
-                        "in": "path",
+                        "in": "path",                    /*"rules_list": {
+                            "type": "array",
+                            "$ref": "#/components/schemas/Rule"
+                        }*/
                         "name": "projectID",
                         "schema": {
                             "type": "string"
@@ -548,6 +551,10 @@
                     "to_account": {
                         "type": "string",
                         "description": "User account"
+                    },
+                    "rules_list": {
+                        "type": "array",
+                        "$ref": "#/components/schemas/Rule"
                     }
                 },
                 "required": [
