@@ -669,13 +669,7 @@
                 },
                 "required": [
                     "rule_type",
-                    "amount",
-                    "fix_salary_execution_day",
-                    "execution_frequency",
-                    "sport_team",
-                    "sport_conditions",
-                    "weather_city",
-                    "temperature"
+                    "amount"
                 ]
             },
             "Project": {
