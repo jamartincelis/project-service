@@ -71,8 +71,8 @@
                             "type": "string"
                         },
                         "required": true,
-                        "description": "UUID of the user",
-                        "example": "b9e605ee-4cca-400e-99c5-ae24abca97d5"
+                        "description": "Id del usuario",
+                        "example": "0390a508-dba5-4344-b77f-93e1227d42f4"
                     }
                 ],
                 "responses": {
@@ -103,8 +103,8 @@
                             "type": "string"
                         },
                         "required": true,
-                        "description": "UUID of the user",
-                        "example": "b9e605ee-4cca-400e-99c5-ae24abca97d5"
+                        "description": "Id del usuario",
+                        "example": "0390a508-dba5-4344-b77f-93e1227d42f4"
                     }
                 ],
                 "requestBody": {
@@ -122,8 +122,8 @@
                                     "total": 5000,
                                     "from_account" : "333bb09d-26ab-4fe5-8051-6619dba1eff7",
                                     "to_account" : "c80f5170-2926-4b45-af64-dfe13e24a222",
-                                    "rules_list" : [],
-                                    "name": "mi meta prueba"
+                                    "name": "mi meta prueba",
+                                    "rules_list" : []
                                   }
                                 },
                                 "Meta con Reglas": {
@@ -174,8 +174,8 @@
                             "type": "string"
                         },
                         "required": true,
-                        "description": "User ID",
-                        "example": "b9e605ee-4cca-400e-99c5-ae24abca97d5"
+                        "description": "Id del usuario",
+                        "example": "0390a508-dba5-4344-b77f-93e1227d42f4"
                     },
                     {
                         "in": "path",
@@ -184,7 +184,7 @@
                             "type": "string"
                         },
                         "required": true,
-                        "description": "Project ID",
+                        "description": "Id de la meta",
                         "example": "1b18e880-4d56-4f33-82e3-79937477f008"
                     }
                 ],
@@ -215,8 +215,8 @@
                             "type": "string"
                         },
                         "required": true,
-                        "description": "UUID of the user",
-                        "example": "b9e605ee-4cca-400e-99c5-ae24abca97d5"
+                        "description": "Id del usuario",
+                        "example": "0390a508-dba5-4344-b77f-93e1227d42f4"
                     },
                     {
                         "in": "path",
@@ -225,10 +225,9 @@
                             "type": "string"
                         },
                         "required": true,
-                        "description": "Project ID",
+                        "description": "Id de la meta",
                         "example": "1b18e880-4d56-4f33-82e3-79937477f008"
                     }
-
                 ],
                 "requestBody": {
                     "content": {
@@ -272,8 +271,8 @@
                             "type": "string"
                         },
                         "required": true,
-                        "description": "UUID of the user",
-                        "example": "b9e605ee-4cca-400e-99c5-ae24abca97d5"
+                        "description": "Id del usuario",
+                        "example": "0390a508-dba5-4344-b77f-93e1227d42f4"
                     },
                     {
                         "in": "path",
@@ -282,10 +281,9 @@
                             "type": "string"
                         },
                         "required": true,
-                        "description": "Project ID",
+                        "description": "Id de la meta",
                         "example": "1b18e880-4d56-4f33-82e3-79937477f008"
                     }
-
                 ],
                 "requestBody": {
                     "content": {
@@ -325,10 +323,10 @@
                 ]
             }                        
         },
-        "/user/{userID}/projects/{projectID}/rules/": {
+        "/users/{userID}/projects/{projectID}/rules/": {
             "get": {
-                "summary": "Get rules by project",
-                "operationId": "get_rules_by_project",
+                "summary": "Listar las reglas de la meta",
+                "operationId": "listar_reglas",
                 "description": "",
                 "parameters": [
                     {
@@ -338,7 +336,8 @@
                             "type": "string"
                         },
                         "required": true,
-                        "description": "UUID of the user"
+                        "description": "Id del usuario",
+                        "example": "0390a508-dba5-4344-b77f-93e1227d42f4"
                     },
                     {
                         "in": "path",
@@ -347,7 +346,8 @@
                             "type": "string"
                         },
                         "required": true,
-                        "description": "UUID of the project"
+                        "description": "Id de la meta",
+                        "example": "3cb17971-e530-4070-b37f-c7b164699295"
                     }
                 ],
                 "responses": {
@@ -360,18 +360,72 @@
                                 }
                             }
                         },
-                        "description": "Get rules by projectID"
+                        "description": "Lista de reglas"
                     }
                 },
                 "tags": [
                     "Reglas"
                 ]
-            }
+            },
+            "post": {
+                "summary": "Crear regla",
+                "operationId": "crear_regla",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "userID",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true,
+                        "description": "Id del usuario",
+                        "example": "0390a508-dba5-4344-b77f-93e1227d42f4"
+                    },
+                    {
+                        "in": "path",
+                        "name": "projectID",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true,
+                        "description": "Id de la meta",
+                        "example": "3cb17971-e530-4070-b37f-c7b164699295"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Rule"
+                            },
+                            "examples": {
+                                "Regla pasion futbolera": {
+                                  "summary": "Ejemplo de regla pasion futbolera",
+                                  "value": {                                    
+                                    "rule_type" : "a3125075-ff44-4b8b-be29-6c73fd846872",
+                                    "amount": 6600.00,
+                                    "sport_team": "ed560855-40f8-4281-b3f5-6a82e30899fb",
+                                    "sport_conditions": "J"                                    
+                                  }
+                                }
+                            }                            
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    }
+                },
+                "tags": [
+                    "Reglas"
+                ]
+            }            
         },
-        "/user/{userID}/projects/{projectID}/rules/{ruleID}/": {
+        "/users/{userID}/projects/{projectID}/rules/{ruleID}/": {
             "get": {
-                "summary": "Get rule detail",
-                "operationId": "get_rule_detail",
+                "summary": "Detalle de la regla",
+                "operationId": "detaile_regla",
                 "description": "",
                 "parameters": [
                     {
@@ -381,7 +435,8 @@
                             "type": "string"
                         },
                         "required": true,
-                        "description": "User ID"
+                        "description": "Id del usuario",
+                        "example": "0390a508-dba5-4344-b77f-93e1227d42f4"
                     },
                     {
                         "in": "path",
@@ -390,7 +445,8 @@
                             "type": "string"
                         },
                         "required": true,
-                        "description": "Project ID"
+                        "description": "Id de la meta",
+                        "example": "1b18e880-4d56-4f33-82e3-79937477f008"
                     },
                     {
                         "in": "path",
@@ -399,7 +455,8 @@
                             "type": "string"
                         },
                         "required": true,
-                        "description": "Rule ID"
+                        "description": "Id de la regla",
+                        "example": "6e10b138-9899-43cf-8a62-d6119456aa82"
                     }
                 ],
                 "responses": {
@@ -412,7 +469,7 @@
                                 }
                             }
                         },
-                        "description": "Get rule detail"
+                        "description": "Detalle de la regla"
                     }
                 },
                 "tags": [
@@ -420,8 +477,8 @@
                 ]
             },
             "patch": {
-                "summary": "Update rule",
-                "operationId": "update_rule",
+                "summary": "Actualizar regla. Forma 1.",
+                "operationId": "actualizar_regla_patch",
                 "description": "",
                 "parameters": [
                     {
@@ -431,7 +488,8 @@
                             "type": "string"
                         },
                         "required": true,
-                        "description": "User ID"
+                        "description": "Id del usuario",
+                        "example": "0390a508-dba5-4344-b77f-93e1227d42f4"
                     },
                     {
                         "in": "path",
@@ -440,7 +498,8 @@
                             "type": "string"
                         },
                         "required": true,
-                        "description": "Project ID"
+                        "description": "Id de la meta",
+                        "example": "3cb17971-e530-4070-b37f-c7b164699285"
                     },
                     {
                         "in": "path",
@@ -449,9 +508,33 @@
                             "type": "string"
                         },
                         "required": true,
-                        "description": "Rule ID"
+                        "description": "Id de la regla",
+                        "example": "6e10b138-9899-43cf-8a62-d6119456aa82"
                     }
                 ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Rule"
+                            },
+                            "examples": {
+                                "Actualizar monto": {
+                                  "summary": "Ejemplo actualizar monto",
+                                  "value": {
+                                        "amount": 9000
+                                  }
+                                },
+                                "Actualizar estatus": {
+                                    "summary": "Ejemplo actualizar estatus",
+                                    "value": {
+                                        "status": "65729137-0844-4b28-85b5-2e81b73a948a"
+                                    }
+                                }                                
+                            }
+                        }
+                    }
+                },                
                 "responses": {
                     "200": {
                         "content": {
@@ -459,10 +542,84 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {}
-                                }
+                                }                         
                             }
                         },
-                        "description": "Update rule"
+                        "description": "Actualizar regla"
+                    }
+                },
+                "tags": [
+                    "Reglas"
+                ]
+            },
+            "put": {
+                "summary": "Actualizar regla. Forma 2.",
+                "operationId": "actualizar_regla_put",
+                "description": "",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "userID",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true,
+                        "description": "Id del usuario",
+                        "example": "0390a508-dba5-4344-b77f-93e1227d42f4"
+                    },
+                    {
+                        "in": "path",
+                        "name": "projectID",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true,
+                        "description": "Id de la meta",
+                        "example": "3cb17971-e530-4070-b37f-c7b164699285"
+                    },
+                    {
+                        "in": "path",
+                        "name": "ruleID",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true,
+                        "description": "Id de la regla",
+                        "example": "6e10b138-9899-43cf-8a62-d6119456aa82"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Rule"
+                            },
+                            "examples": {
+                                "Actualizar monto": {
+                                  "summary": "Ejemplo actualizar monto, onboarding",
+                                  "value": {
+                                    "user": "0390a508-dba5-4344-b77f-93e1227d42f4",
+                                    "project": "3cb17971-e530-4070-b37f-c7b164699295",
+                                    "rule_type": "23d281b7-021f-4421-9062-d9568ca162ec",
+                                    "rule_category": "a34b4b3f-fb71-4e0b-b82e-beb94b79932e",        
+                                    "amount": 11000.00
+                                  }
+                                }                             
+                            }
+                        }
+                    }
+                },                   
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {}
+                                }                                                      
+                            }
+                        },
+                        "description": "Actualizar regla"
                     }
                 },
                 "tags": [
