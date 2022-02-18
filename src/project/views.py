@@ -6,22 +6,17 @@ from rest_framework.response import Response
 from rest_framework import status
 
 from project.models import Project
-from project.serializers import ProjectFrontSerializer
+from project.serializers import ProjectSerializer
 from project.helpers import get_catalog, create_project, update_project
 
 class ProjectList(ListCreateAPIView):
     """
     Devuelve un listado de metas o crea una nueva meta.
     """
-    serializer_class = ProjectFrontSerializer
+    serializer_class = ProjectSerializer
 
     def get_queryset(self):
         return Project.objects.filter(user=self.kwargs['user'])
-
-    def get(self, request, user):
-        projects = self.get_queryset()
-        serializer = ProjectFrontSerializer(projects, many=True)
-        return Response(data=serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request, user):
         """
@@ -37,7 +32,7 @@ class ProjectDetail(RetrieveUpdateAPIView):
     """
     Obtiene o actualiza una meta.
     """
-    serializer_class = ProjectFrontSerializer
+    serializer_class = ProjectSerializer
     
     def get_queryset(self):
         return Project.objects.filter(user=self.kwargs['user'], pk=self.kwargs['pk'])

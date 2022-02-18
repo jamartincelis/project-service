@@ -1,43 +1,35 @@
 from os import environ
-
 import requests as re
-
 from rest_framework import serializers
-
 from project.models import Project
 from project.helpers import catalog_to_dict
-
-from rule.serializers import RuleFrontSerializer
 from rule.models import Rule
 
 
-class ProjectFrontSerializer(serializers.ModelSerializer):
-    """
-    Permite acceder a lo datos basicos de una meta.
-    """
-
-    category = serializers.SerializerMethodField()
-    project_type = catalog_to_dict('project_type')
-    rules_list = RuleFrontSerializer(read_only=True)
+class ProjectSerializer(serializers.ModelSerializer):
+    
+    project_type_catalogs = catalog_to_dict('project_type')
 
     class Meta:
         model = Project
         fields = '__all__'
 
-    def get_category(self, obj):
+    def get_object_category(self, pk):
         try:
-            r = self.project_type[str(obj['category'])]
+            r = self.project_type_catalogs[str(pk)]
         except TypeError:
-            r = self.project_type[(str(obj.category))]
+            r = self.project_type_catalogs[(str(pk))]
         return r
 
+    def to_representation(self, instance):
+        """
+        Permite modificar la forma en que se retornan las metas
+        """
+        data = super(ProjectSerializer, self).to_representation(instance)
+        data['category'] = self.get_object_category(data['category'])
+        data.update(data)
 
-class ProjectModelSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Project
-        fields = '__all__'
-
+        return data
 
 class AuxiliaryRuleModelSerializer(serializers.ModelSerializer):
     """

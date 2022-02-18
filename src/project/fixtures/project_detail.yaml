@@ -15,3 +15,21 @@
     to_account: 'ZYXWVUTSRQ'
     updated_at: '2021-05-01T13:20:30-06:00'
     created_at: '2021-05-01T13:20:30-06:00'
+
+- model: 'project.Project'
+  fields:
+    id: 'e2563785-ca2b-4304-b0fb-c0a45ee66df9'
+    user: 'b9e605ee-4cca-400e-99c5-ae24abca97d5'
+    status: 'd7d30bcd-8417-47c9-b294-a4ca5bfd3506'
+    category: '7c1521e9-6d06-4c6e-9aa5-db4414afe71f'
+    name: 'Mi meta de ejemplo'
+    goal_date: '2022-02-15'
+    deleted_at: null
+    total: 108000
+    progress: 0
+    processing: 0
+    pending: 0
+    from_account: '333bb09d-26ab-4fe5-8051-6619dba1eff7'
+    to_account: 'c80f5170-2926-4b45-af64-dfe13e24a222'
+    updated_at: '2021-05-01T13:20:30-06:00'
+    created_at: '2021-05-01T13:20:30-06:00'

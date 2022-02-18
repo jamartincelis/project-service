@@ -1,42 +1,32 @@
 from rest_framework import serializers
-
 from project.helpers import catalog_to_dict
-
 from rule.models import Rule
 
-
-
-class RuleFrontSerializer(serializers.ModelSerializer):
-    """
-    Permite acceder a lo datos basicos de una regla.
-    """
-
-    rule_type = serializers.SerializerMethodField()
-    sport_team = serializers.SerializerMethodField()
-    rule_types = catalog_to_dict('rule_types')
-    sport_teams = catalog_to_dict('sports_teams')
+class RuleSerializer(serializers.ModelSerializer):
+    # catalogos de tipos de regla
+    rule_type_catalogs = catalog_to_dict('rule_types')
 
     class Meta:
         model = Rule
         fields = '__all__'
 
-    def get_rule_type(self, obj):
+    def get_rule_type_object(self, pk):
         try:
-            r = self.rule_types[str(obj['rule_type'])]
+            r = self.rule_type_catalogs[str(pk)]
         except TypeError:
-            r = self.rule_types[(str(obj.rule_type))]
+            r = self.rule_type_catalogs[(str(pk))]
         return r
 
-    def get_sport_team(self, obj):
-        team = obj['sport_team'] if isinstance(obj, dict) else str(obj.sport_team)
-        try:
-            return self.sport_teams[team]
-        except KeyError:
-            return None
+    def to_representation(self, instance):
+        data = super(RuleSerializer, self).to_representation(instance)
+        data['rule_type'] = self.get_rule_type_object(data['rule_type'])
+        data.update(data)
 
+        return data
 
-class RuleModelSerializer(serializers.ModelSerializer):
+    def to_internal_value(self, data):
 
-    class Meta:
-        model = Rule
-        fields = '__all__'
+        data['user'] = self.context.get("request").parser_context["kwargs"]["user"]
+        data['project'] = self.context.get("request").parser_context["kwargs"]["project"]
+        
+        return super().to_internal_value(data)

@@ -87,7 +87,9 @@ def create_project_with_rules(project_data=None, data_rules_list=None):
     """
     Permite crear una meta con un conjuntos de reglas.
     """
-    project = Project.objects.create(**serializers.ProjectModelSerializer(project_data).data)
+    serializer = serializers.ProjectSerializer(data=project_data)
+    if serializer.is_valid():
+        project = serializer.save()
     rules = []
     for rule in data_rules_list:
         rule['user'] = project_data['user']
@@ -95,8 +97,8 @@ def create_project_with_rules(project_data=None, data_rules_list=None):
         rules.append(rule)
     
     created_rules = Rule.objects.bulk_create([Rule(**rule) for rule in rules])
-    created_project_data = serializers.ProjectFrontSerializer(project).data
-    created_project_data['rules_list'] = serializers.RuleFrontSerializer(created_rules, many=True).data
+    created_project_data = serializers.ProjectSerializer(project).data
+    created_project_data['rules_list'] = serializers.RuleSerializer(created_rules, many=True).data
 
     return created_project_data
 
@@ -105,16 +107,19 @@ def create_project(data=None):
     Función principal que permite la creación de metas.
     """
     # se valida la meta
-    model_serializer = serializers.ProjectModelSerializer(data=data)
+    model_serializer = serializers.ProjectSerializer(data=data)
     if not model_serializer.is_valid():
         return Response(model_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    # se validan las reglas
+    if not "rules_list" in data:
+        return Response("rules_list required", status=status.HTTP_400_BAD_REQUEST)
+
     data_rules_list = data.get('rules_list')
+    # se validan las reglas
     invalid = invalid_rules(data_rules_list)
     if invalid:
         return Response(invalid, status=status.HTTP_400_BAD_REQUEST)
-
+        
     # se validan las cuentas
     validation = validate_accounts(data)
     if validation in (True,False):
@@ -146,9 +151,9 @@ def update_project(request=None, kwargs=None):
             return are_valids
             
     if request.method == 'PUT':
-        model_serializer = serializers.ProjectModelSerializer(data=request.data)
+        model_serializer = serializers.ProjectSerializer(data=request.data)
         if not model_serializer.is_valid():
             return Response(model_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     project.__dict__.update(request.data)
     project.save()
-    return Response(serializers.ProjectFrontSerializer(project).data, status=status.HTTP_200_OK)
+    return Response(serializers.ProjectSerializer(project).data, status=status.HTTP_200_OK)
