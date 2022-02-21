@@ -17,17 +17,17 @@ spec:
     spec:
       containers:
       - name: project-service
-        image: 212760202707.dkr.ecr.us-east-1.amazonaws.com/widgets-backend:project-service-9b3d4d17722b30ca090a24dfcf7c3116cfc42d70 # imagen
+        image: 212760202707.dkr.ecr.us-east-1.amazonaws.com/widgets-backend:project-service-5af0b423a5c88d2ac242d041d060f281cebded5b
         imagePullPolicy: Always
         livenessProbe:
           httpGet:
-            path: /monitoring/health-check/
+            path: /project-service/monitoring/health-check/
             port: 8000
           initialDelaySeconds: 10
           periodSeconds: 43200
         readinessProbe:
           httpGet:
-            path: /monitoring/health-check/
+            path: /project-service/monitoring/health-check/
             port: 8000
         envFrom:
         - secretRef:
