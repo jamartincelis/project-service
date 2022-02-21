@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: project-service
+  namespace: default
+  labels:
+      app: project-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: project-service
+  template:
+    metadata:
+      labels:
+        app: project-service
+    spec:
+      containers:
+      - name: project-service
+        image: 212760202707.dkr.ecr.us-east-1.amazonaws.com/widgets-backend:project-service-9b3d4d17722b30ca090a24dfcf7c3116cfc42d70 # imagen
+        imagePullPolicy: Always
+        livenessProbe:
+          httpGet:
+            path: /monitoring/health-check/
+            port: 8000
+          initialDelaySeconds: 10
+          periodSeconds: 43200
+        readinessProbe:
+          httpGet:
+            path: /monitoring/health-check/
+            port: 8000
+        envFrom:
+        - secretRef:
+            name: project-service-secret
+        command:  ["python", "src/manage.py", "runserver", "0.0.0.0:8000"]
+        ports:
+          - name: tcp
+            containerPort: 8000
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "50m"
+          limits:
+            memory: "128Mi"
+            cpu: "100m"

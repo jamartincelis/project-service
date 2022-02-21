@@ -1,7 +1,9 @@
-FROM python:3.8
+FROM python:3.9.10
 
 ENV PYTHONUNBUFFERED 1
 
+RUN apt update -y
+RUN apt upgrade -y
 RUN mkdir /code
 WORKDIR /code
 ADD . /code/
