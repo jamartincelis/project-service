@@ -17,7 +17,7 @@ from os import environ
 import sentry_sdk
 
 from sentry_sdk.integrations.django import DjangoIntegration
-
+import sys
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -85,16 +85,27 @@ WSGI_APPLICATION = 'projectservice.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': environ.get('DATABASE_NAME'),
-        'USER': environ.get('DATABASE_USER'),
-        'PASSWORD': environ.get('DATABASE_PASSWORD'),
-        'HOST': environ.get('DATABASE_HOST'),
-        'PORT': environ.get('DATABASE_PORT'),
+if 'test' in sys.argv or 'test_coverage' in sys.argv: #Covers regular testing and django-coverage
+    USE_TZ = False
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3'
+        }
+    }    
+else:
+    USE_TZ = True
+    TIME_ZONE = environ.get('TIME_ZONE')
+    
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': environ.get('DATABASE_NAME'),
+            'USER': environ.get('DATABASE_USER'),
+            'PASSWORD': environ.get('DATABASE_PASSWORD'),
+            'HOST': environ.get('DATABASE_HOST'),
+            'PORT': environ.get('DATABASE_PORT'),
+        }
     }
-}
 
 
 # Password validation
