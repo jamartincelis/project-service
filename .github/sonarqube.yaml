@@ -1,0 +1,37 @@
+name: Sonarqube
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize, reopened]
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Running Tests
+        env:
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          TIME_ZONE: "America/Santiago"
+          CORE_SERVICE_URL: ${{ secrets.CORE_SERVICE_URL }}
+          CATALOG_SERVICE_URL: ${{ secrets.CATALOG_SERVICE_URL }}                
+        run: |
+          coverage run --source='.' src/manage.py test project rule
+          coverage xml      
+      - name: SonarCloud Scan          
+        uses: sonarsource/sonarqube-scan-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
