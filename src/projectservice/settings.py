@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'monitoring',
     'project',
-    'rule'
+    'rule',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
