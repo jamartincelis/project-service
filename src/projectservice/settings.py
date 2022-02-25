@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'monitoring',
     'project',
     'rule',
-    'django_extensions',
+    'django_extensions'
 ]
 
 MIDDLEWARE = [
@@ -86,27 +86,14 @@ WSGI_APPLICATION = 'projectservice.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-if 'test' in sys.argv or 'test_coverage' in sys.argv: #Covers regular testing and django-coverage
-    USE_TZ = False
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3'
-        }
-    }    
-else:
-    USE_TZ = True
-    TIME_ZONE = environ.get('TIME_ZONE')
-    
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': environ.get('DATABASE_NAME'),
-            'USER': environ.get('DATABASE_USER'),
-            'PASSWORD': environ.get('DATABASE_PASSWORD'),
-            'HOST': environ.get('DATABASE_HOST'),
-            'PORT': environ.get('DATABASE_PORT'),
-        }
+
+USE_TZ = False
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'project-service-db'
     }
+}    
 
 
 # Password validation

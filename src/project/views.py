@@ -7,7 +7,7 @@ from rest_framework import status
 
 from project.models import Project
 from project.serializers import ProjectSerializer
-from project.helpers import get_catalog, create_project, update_project
+from project.helpers import get_catalog
 
 class ProjectList(ListCreateAPIView):
     """
@@ -18,16 +18,6 @@ class ProjectList(ListCreateAPIView):
     def get_queryset(self):
         return Project.objects.filter(user=self.kwargs['user'])
 
-    def post(self, request, user):
-        """
-        Permite crear una meta y sus reglas
-        """
-        data = request.data
-        data['user'] = user
-
-        return create_project(data)
-
-
 class ProjectDetail(RetrieveUpdateAPIView):
     """
     Obtiene o actualiza una meta.
@@ -36,9 +26,6 @@ class ProjectDetail(RetrieveUpdateAPIView):
     
     def get_queryset(self):
         return Project.objects.filter(user=self.kwargs['user'], pk=self.kwargs['pk'])
-
-    def update(self, request, *args, **kwargs):
-        return update_project(request,kwargs)
 
 class NewProjectWidget(APIView):
 

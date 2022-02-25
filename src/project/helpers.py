@@ -29,18 +29,16 @@ def validate_accounts(data):
         accounts.append(data['from_account'])
     if 'to_account' in data and data['to_account'] is not None:
         accounts.append(data['to_account'])
-    data = {'user': data['user'], 'accounts': accounts}
+    payload = {
+        'user': str(data['user']), 
+        'accounts': accounts
+    }
     if len(accounts) > 0:
         try:
-            r = requests.post(core_url+validation_path, json=data, timeout=0.5)
-            if r.status_code == 200:
-                return True
-            else:
-                return Response(r.text, status=status.HTTP_400_BAD_REQUEST)
+            request = requests.post('{}{}'.format(core_url,validation_path), json=payload, timeout=0.5)
+            return request.text
         except requests.exceptions.RequestException:
             return Response('Service unavailable', status=status.HTTP_503_SERVICE_UNAVAILABLE)
-    else:
-        return False
 
 
 def catalog_to_dict(catalog_name):
@@ -71,89 +69,3 @@ def get_catalog(catalog_name):
         return requests.get(catalog_url+'?catalog={}'.format(catalog_name)).json()
     except requests.exceptions.RequestException:
         return {}
-
-
-def invalid_rules(data_rules_list=None):
-    """
-    Valida un conjuntos de reglas
-    """
-    if len(data_rules_list) > 0:
-        model_serializer = serializers.AuxiliaryRuleModelSerializer(data=data_rules_list, many=True)
-        if not model_serializer.is_valid():
-            return model_serializer.errors
-    return False
-
-def create_project_with_rules(project_data=None, data_rules_list=None):
-    """
-    Permite crear una meta con un conjuntos de reglas.
-    """
-    serializer = serializers.ProjectSerializer(data=project_data)
-    if serializer.is_valid():
-        project = serializer.save()
-    rules = []
-    for rule in data_rules_list:
-        rule['user'] = project_data['user']
-        rule['project'] = project
-        rules.append(rule)
-    
-    created_rules = Rule.objects.bulk_create([Rule(**rule) for rule in rules])
-    created_project_data = serializers.ProjectSerializer(project).data
-    created_project_data['rules_list'] = serializers.RuleSerializer(created_rules, many=True).data
-
-    return created_project_data
-
-def create_project(data=None):
-    """
-    Función principal que permite la creación de metas.
-    """
-    # se valida la meta
-    model_serializer = serializers.ProjectSerializer(data=data)
-    if not model_serializer.is_valid():
-        return Response(model_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    if not "rules_list" in data:
-        return Response("rules_list required", status=status.HTTP_400_BAD_REQUEST)
-
-    data_rules_list = data.get('rules_list')
-    # se validan las reglas
-    invalid = invalid_rules(data_rules_list)
-    if invalid:
-        return Response(invalid, status=status.HTTP_400_BAD_REQUEST)
-        
-    # se validan las cuentas
-    validation = validate_accounts(data)
-    if validation in (True,False):
-        created_project_data = create_project_with_rules(data, data_rules_list)
-        return Response(created_project_data, status=status.HTTP_201_CREATED)
-    # Se retorna cualquier error que no permita la creación de la meta (errores de red)
-    return validation
-
-def update_project(request=None, kwargs=None):
-    """
-    Permite actualizar una meta.
-    """
-    try:
-        project = Project.objects.get(user=kwargs['user'], pk=kwargs['pk'])
-    except Project.DoesNotExist:
-        return Response("Not found.", status.HTTP_404_NOT_FOUND)
-
-    data = request.data
-    data['user'] = kwargs['user']
-    have_accounts = []
-    if 'from_account' in data and data['from_account'] is not None:
-        have_accounts.append(True)
-    if 'to_account' in data and data['to_account'] is not None:
-        have_accounts.append(True)
-    
-    if have_accounts and all(have_accounts):
-        are_valids = validate_accounts(data)
-        if are_valids is not True:
-            return are_valids
-            
-    if request.method == 'PUT':
-        model_serializer = serializers.ProjectSerializer(data=request.data)
-        if not model_serializer.is_valid():
-            return Response(model_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    project.__dict__.update(request.data)
-    project.save()
-    return Response(serializers.ProjectSerializer(project).data, status=status.HTTP_200_OK)
