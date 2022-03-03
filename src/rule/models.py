@@ -21,10 +21,10 @@ class Rule(models.Model):
     fix_salary_execution_day = models.PositiveSmallIntegerField(default=0)
     # indica la frecuencia de ejecucion de las reglas monto fijo y gastar menos 
     FREQUENCY_CONDITIONS_CHOICES = [
-        ('d', 'Diario'),
-        ('s', 'Semanal'),
-        ('q', 'Quincenal'),
-        ('m', 'Mensual'),
+        ('D', 'Diario'),
+        ('S', 'Semanal'),
+        ('Q', 'Quincenal'),
+        ('M', 'Mensual'),
     ]
     execution_frequency = models.CharField(default=None, null=True, max_length=1, choices=FREQUENCY_CONDITIONS_CHOICES)
     # pasion futbolera
