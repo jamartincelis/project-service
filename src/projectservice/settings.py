@@ -47,8 +47,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'monitoring',
     'project',
-    'rule',
-    'django_extensions'
+    'rule'
 ]
 
 MIDDLEWARE = [
@@ -133,13 +132,9 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = environ.get('TIME_ZONE')
-
 USE_I18N = True
 
 USE_L10N = True
-
-USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)

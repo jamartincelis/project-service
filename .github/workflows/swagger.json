@@ -104,7 +104,7 @@
                         },
                         "required": true,
                         "description": "Id del usuario",
-                        "example": "0390a508-dba5-4344-b77f-93e1227d42f4"
+                        "example": "b9e605ee-4cca-400e-99c5-ae24abca97d5"
                     }
                 ],
                 "requestBody": {

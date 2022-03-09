@@ -79,7 +79,8 @@ class ProjectSerializer(serializers.ModelSerializer):
     
         created_rules = Rule.objects.bulk_create([Rule(**rule) for rule in rules])
         self.initial_data['rules_list'] = RuleSerializer(created_rules, many=True).data
-        
+        self.initial_data['id'] = project.id
+
         return self.initial_data
 
     def update(self, instance, validated_data):
