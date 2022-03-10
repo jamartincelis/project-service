@@ -1,8 +1,8 @@
 version: '3'
 
 services:
-    project-service_local:
-        container_name: project-service_local
+    project-service:
+        container_name: project-service
         build: .
         command: >
             sh -c "python src/manage.py runserver 0.0.0.0:8000"
