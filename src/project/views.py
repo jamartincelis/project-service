@@ -7,7 +7,8 @@ from rest_framework import status
 
 from project.models import Project
 from project.serializers import ProjectSerializer
-from project.helpers import get_catalog
+from project.helpers import get_catalog, validate_accounts
+
 
 class ProjectList(ListCreateAPIView):
     """
@@ -18,6 +19,7 @@ class ProjectList(ListCreateAPIView):
     def get_queryset(self):
         return Project.objects.filter(user=self.kwargs['user'])
 
+
 class ProjectDetail(RetrieveUpdateAPIView):
     """
     Obtiene o actualiza una meta.
@@ -26,6 +28,7 @@ class ProjectDetail(RetrieveUpdateAPIView):
     
     def get_queryset(self):
         return Project.objects.filter(user=self.kwargs['user'], pk=self.kwargs['pk'])
+
 
 class NewProjectWidget(APIView):
 

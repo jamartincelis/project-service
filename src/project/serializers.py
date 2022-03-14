@@ -45,15 +45,9 @@ class ProjectSerializer(serializers.ModelSerializer):
         return super().to_internal_value(data)
 
     def validate(self, data):
-        from_account = data.get('from_account')
-        to_account = data.get('to_account')
-        
-        if from_account and to_account:
-            # validar cuentas
-            message = validate_accounts(data).strip('"')
-            if message != "OK":
-                raise serializers.ValidationError(message)
-        return data
+        if validate_accounts(data):
+            return data
+        raise serializers.ValidationError('Bad request')
 
     def create(self, validated_data):
         # se valida que este presente en el request
