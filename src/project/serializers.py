@@ -49,6 +49,7 @@ class ProjectSerializer(serializers.ModelSerializer):
         return super().to_internal_value(data)
 
     def validate(self, data):
+        data['user'] = self.context.get('request').parser_context.get('kwargs').get('user')
         if validate_accounts(data):
             return data
         raise serializers.ValidationError('Bad request. Invalid user accounts.')
