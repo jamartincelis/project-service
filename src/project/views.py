@@ -27,7 +27,7 @@ class ProjectDetail(RetrieveUpdateAPIView):
     serializer_class = ProjectSerializer
     
     def get_queryset(self):
-        return Project.objects.filter(user=self.kwargs['user'], pk=self.kwargs['pk'])
+        return Project.objects.get(user=self.kwargs['user'], pk=self.kwargs['pk'])
 
 
 class NewProjectWidget(APIView):

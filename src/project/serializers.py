@@ -1,12 +1,18 @@
 from os import environ
+
 import requests as re
+
 from rest_framework import serializers
+from rest_framework.response import Response
+
 from project.models import Project
 from project.helpers import catalog_to_dict
+
 from rule.models import Rule
-from .helpers import validate_accounts
 from rule.serializers import RuleSerializer
-from rest_framework.response import Response
+
+from .helpers import validate_accounts
+
 
 class ProjectSerializer(serializers.ModelSerializer):
     
@@ -30,14 +36,12 @@ class ProjectSerializer(serializers.ModelSerializer):
         """
         data = super(ProjectSerializer, self).to_representation(instance)
         data['category'] = self.get_object_category(data['category'])
-        
         try:
             # rename rules to rules_list 
             data['rules_list'] = data.pop('rules')
         except KeyError:
             data['rules_list'] = self.initial_data['rules_list']
         data.update(data)
-
         return data
 
     def to_internal_value(self, data):
@@ -47,34 +51,28 @@ class ProjectSerializer(serializers.ModelSerializer):
     def validate(self, data):
         if validate_accounts(data):
             return data
-        raise serializers.ValidationError('Bad request')
+        raise serializers.ValidationError('Bad request. Invalid user accounts.')
 
     def create(self, validated_data):
         # se valida que este presente en el request
         if not "rules_list" in self.initial_data:
             raise serializers.ValidationError("rules_list is required.")
-        
         # si tiene reglas, se validan
         rules_list = self.initial_data['rules_list']
-
         if len(rules_list) > 0:
             model_serializer = AuxiliaryRuleModelSerializer(data=rules_list, many=True)
             if not model_serializer.is_valid():
                 return model_serializer.errors
-
         project = Project.objects.create(**validated_data)
-
         # se crean las reglas
         rules = []
         for rule in rules_list:
             rule['user'] = validated_data['user']
             rule['project'] = project
             rules.append(rule)
-    
         created_rules = Rule.objects.bulk_create([Rule(**rule) for rule in rules])
         self.initial_data['rules_list'] = RuleSerializer(created_rules, many=True).data
         self.initial_data['id'] = project.id
-
         return self.initial_data
 
     def update(self, instance, validated_data):

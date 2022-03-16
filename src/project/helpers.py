@@ -32,17 +32,17 @@ def validate_accounts(data):
         accounts.append(data['from_account'])
     if 'to_account' in data and data['to_account'] is not None:
         accounts.append(data['to_account'])
-    payload = {
-        'user': str(data['user']), 
-        'accounts': accounts
-    }
-    print(accounts)
     if len(accounts) > 0:
+        payload = {
+            'user': str(data['user']), 
+            'accounts': accounts
+        }
         request = requests.post('{}{}'.format(core_url, validation_path), json=payload, timeout=2)
-        print(request)
         if request.status_code == 200:
             return True
-        return False
+        else:
+            return False
+    return True
 
 
 def catalog_to_dict(catalog_name):
