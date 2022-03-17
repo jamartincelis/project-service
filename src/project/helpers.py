@@ -37,7 +37,7 @@ def validate_accounts(data):
             'user': str(data['user']), 
             'accounts': accounts
         }
-        request = requests.post('{}{}'.format(core_url, validation_path), json=payload, timeout=2)
+        request = requests.post('{}{}'.format(core_url, validation_path), json=payload, timeout=10)
         if request.status_code == 200:
             return True
         else:

@@ -24,10 +24,23 @@ class ProjectDetail(RetrieveUpdateAPIView):
     """
     Obtiene o actualiza una meta.
     """
-    serializer_class = ProjectSerializer
 
-    def get_queryset(self):
-        return Project.objects.get(user=self.kwargs['user'], pk=self.kwargs['pk'])
+    def get(self, request, user, pk):
+        try:
+            project = ProjectSerializer(Project.objects.get(user=user, pk=pk)).data
+            return Response(project, status=status.HTTP_200_OK)
+        except Project.DoesNotExist:
+            return Response('Project not found.', status=status.HTTP_404_NOT_FOUND)
+
+    def patch(self, request, user, pk):
+        try:
+            project = Project.objects.get(user=user, pk=pk)
+            for attr, value in request.data.items():
+                setattr(project, attr, value)
+                project.save()
+            return Response(ProjectSerializer(project).data, status=status.HTTP_200_OK)
+        except Project.DoesNotExist:
+            return Response('Project not found.', status=status.HTTP_200_OK)
 
 
 class NewProjectWidget(APIView):
