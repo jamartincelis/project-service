@@ -1,6 +1,8 @@
 from rest_framework.generics import RetrieveUpdateAPIView, ListCreateAPIView
+
 from rule.serializers import RuleSerializer
 from rule.models import Rule
+
 
 class RuleList(ListCreateAPIView):
     """
@@ -16,8 +18,8 @@ class RuleList(ListCreateAPIView):
         queryset = Rule.objects.filter(
             user=self.kwargs['user'], project=self.kwargs['project'],
             status=STATUS_ACTIVE).exclude(rule_type=MANUAL_SAVING)
-
         return queryset
+
 
 class RuleDetail(RetrieveUpdateAPIView):
     """

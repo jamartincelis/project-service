@@ -1,6 +1,9 @@
 from rest_framework import serializers
+
 from project.helpers import catalog_to_dict
+
 from rule.models import Rule
+
 
 class RuleSerializer(serializers.ModelSerializer):
     # catalogos de tipos de regla
@@ -21,12 +24,9 @@ class RuleSerializer(serializers.ModelSerializer):
         data = super(RuleSerializer, self).to_representation(instance)
         data['rule_type'] = self.get_rule_type_object(data['rule_type'])
         data.update(data)
-
         return data
 
     def to_internal_value(self, data):
-
         data['user'] = self.context.get("request").parser_context["kwargs"]["user"]
         data['project'] = self.context.get("request").parser_context["kwargs"]["project"]
-        
         return super().to_internal_value(data)
