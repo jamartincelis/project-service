@@ -10,6 +10,7 @@ from project.helpers import catalog_to_dict
 
 from rule.models import Rule
 from rule.serializers import RuleSerializer
+from rule.helpers import create_activity
 
 from .helpers import validate_accounts
 
@@ -37,7 +38,7 @@ class ProjectSerializer(serializers.ModelSerializer):
         data = super(ProjectSerializer, self).to_representation(instance)
         data['category'] = self.get_object_category(data['category'])
         try:
-            # rename rules to rules_list 
+            # rename rules to rules_list
             data['rules_list'] = data.pop('rules')
         except KeyError:
             data['rules_list'] = self.initial_data['rules_list']
@@ -72,6 +73,7 @@ class ProjectSerializer(serializers.ModelSerializer):
             rule['project'] = project
             rules.append(rule)
         created_rules = Rule.objects.bulk_create([Rule(**rule) for rule in rules])
+        create_activity(created_rules)
         self.initial_data['rules_list'] = RuleSerializer(created_rules, many=True).data
         self.initial_data['id'] = project.id
         return self.initial_data
