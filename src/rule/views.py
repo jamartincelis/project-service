@@ -13,11 +13,14 @@ class RuleList(ListCreateAPIView):
     def get_queryset(self):
 
         STATUS_ACTIVE = '65729137-0844-4b28-85b5-2e81b73a948a'
+        STATUS_PAUSED = '94bcd197-0d33-40e4-8793-78aa42ad3220'
         MANUAL_SAVING = 'd53ff871-c9e1-407a-b292-872d38f0bddd'
 
         queryset = Rule.objects.filter(
-            user=self.kwargs['user'], project=self.kwargs['project'],
-            status=STATUS_ACTIVE).exclude(rule_type=MANUAL_SAVING)
+            user=self.kwargs['user'], 
+            project=self.kwargs['project'],
+            status__in=(STATUS_ACTIVE,STATUS_PAUSED)
+        ).exclude(rule_type=MANUAL_SAVING)
         return queryset
 
 
