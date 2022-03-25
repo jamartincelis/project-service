@@ -2,5 +2,6 @@
 __pycache__/
 
 *.env
-
+docker-compose-local.yaml
+swagger_local.json
 

@@ -63,7 +63,7 @@ class ProjectSerializer(serializers.ModelSerializer):
         rules_list = self.initial_data['rules_list']
         if len(rules_list) > 0:
             model_serializer = AuxiliaryRuleModelSerializer(data=rules_list, many=True)
-            if not model_serializer.is_valid():
+            if not model_serializer.is_valid(raise_exception=True):
                 return model_serializer.errors
         project = Project.objects.create(**validated_data)
         # se crean las reglas
@@ -89,3 +89,21 @@ class AuxiliaryRuleModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Rule
         exclude = ('project', 'user')
+
+    # catalogos de tipos de regla
+    rule_type_catalogs = catalog_to_dict('rule_types')
+
+    def get_rule_type_object(self, pk):
+        try:
+            r = self.rule_type_catalogs[str(pk)]
+        except TypeError:
+            r = self.rule_type_catalogs[(str(pk))]
+        return r
+
+    def validate(self, data):
+        try:
+            self.get_rule_type_object(data['rule_type'])
+        except KeyError:
+            raise serializers.ValidationError('invalid rule_type')
+
+        return data

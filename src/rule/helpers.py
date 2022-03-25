@@ -36,7 +36,7 @@ def create_activity(rules):
     """
     service_url = environ.get('ACTIVITY_SERVICE_URL')
     for rule in rules:
-        path = 'users/{}/projects/{}/activities/'.format(str(rule.user), str(rule.id))
+        path = 'users/{}/projects/{}/activities/'.format(str(rule.user), str(rule.project.id))
         rule_type = get_rule_type_object(rule.rule_type)
         payload = {
             "user": str(rule.user),

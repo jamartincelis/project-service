@@ -137,7 +137,7 @@
                                       "name": "mi meta prueba con reglas",   
                                       "rules_list" : [
                                             {
-                                                "rule_type" : "02fdb81f-88ef-4f7a-bc0a-c9f66430f391",
+                                                "rule_type" : "01fdb81f-88ef-4f7a-bc0a-c9f66430f391",
                                                 "amount": 19100.00,
                                                 "status": "65729137-0844-4b28-85b5-2e81b73a948a"
                                             },
