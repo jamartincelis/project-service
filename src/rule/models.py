@@ -15,7 +15,7 @@ class Rule(models.Model):
     amount = models.DecimalField(decimal_places=2, max_digits=14)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    transaciton_category = models.UUIDField(db_index=True, null=True)
+    transaction_category = models.UUIDField(db_index=True, null=True)
 
     # indica qué día del mes se ejecuta la regla % de sueldo  
     fix_salary_execution_day = models.PositiveSmallIntegerField(default=0)

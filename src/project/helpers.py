@@ -5,10 +5,13 @@ from os import environ
 import requests
 
 from rest_framework.response import Response
-from rest_framework import status 
+from rest_framework import status
+
 from project import serializers
-from rule.models import Rule
 from project.models import Project
+
+from rule.models import Rule
+
 
 def validate_accounts(data):
     """
@@ -29,16 +32,17 @@ def validate_accounts(data):
         accounts.append(data['from_account'])
     if 'to_account' in data and data['to_account'] is not None:
         accounts.append(data['to_account'])
-    payload = {
-        'user': str(data['user']), 
-        'accounts': accounts
-    }
     if len(accounts) > 0:
-        try:
-            request = requests.post('{}{}'.format(core_url,validation_path), json=payload, timeout=0.5)
-            return request.text
-        except requests.exceptions.RequestException:
-            return Response('Service unavailable', status=status.HTTP_503_SERVICE_UNAVAILABLE)
+        payload = {
+            'user': str(data['user']), 
+            'accounts': accounts
+        }
+        request = requests.post('{}{}'.format(core_url, validation_path), json=payload, timeout=10)
+        if request.status_code == 200:
+            return True
+        else:
+            return False
+    return True
 
 
 def catalog_to_dict(catalog_name):
