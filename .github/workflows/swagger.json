@@ -137,12 +137,14 @@
                                       "name": "mi meta prueba con reglas",   
                                       "rules_list" : [
                                             {
-                                                "rule_type" : "01fdb81f-88ef-4f7a-bc0a-c9f66430f391",
-                                                "amount": 19100.00
+                                                "rule_type" : "02fdb81f-88ef-4f7a-bc0a-c9f66430f391",
+                                                "amount": 19100.00,
+                                                "status": "65729137-0844-4b28-85b5-2e81b73a948a"
                                             },
                                             {
                                                 "rule_type" : "a3125075-ff44-4b8b-be29-6c73fd846872",
-                                                "amount": 51000.00
+                                                "amount": 51000.00,
+                                                "status": "94bcd197-0d33-40e4-8793-78aa42ad3220"
                                             }
                                         ]   
                                     }
@@ -226,7 +228,7 @@
                         },
                         "required": true,
                         "description": "Id de la meta",
-                        "example": "1b18e880-4d56-4f33-82e3-79937477f008"
+                        "example": "3cb17971-e530-4070-b37f-c7b164699285"
                     }
                 ],
                 "requestBody": {
