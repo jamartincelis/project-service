@@ -27,7 +27,7 @@ def rule_signal(sender, instance, created, **kwargs):
     Crea un registro de actividad para la nueva regla.
     """
     service_url = environ.get('ACTIVITY_SERVICE_URL')
-    path = 'users/{}/projects/{}/activities/'.format(instance.user,instance.id)
+    path = 'users/{}/projects/{}/activities/'.format(instance.user, instance.project.id)
     rule_type = get_rule_type_object(instance.rule_type)
     if created:
         mensaje = "Regla {} creada.".format(rule_type['name'])

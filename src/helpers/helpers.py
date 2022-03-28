@@ -42,7 +42,7 @@ def catalog_to_dict(catalog_name):
     """
     try:
         catalog_url = environ.get('CATALOG_SERVICE_URL')
-        r = requests.get(catalog_url+'?catalog={}'.format(catalog_name), timeout=1)
+        r = requests.get(catalog_url+'?catalog={}'.format(catalog_name), timeout=10)
         if r.status_code == 200:
             r = r.json()
             data = {}
@@ -62,7 +62,7 @@ def get_catalog(catalog_name):
     """
     catalog_url = environ.get('CATALOG_SERVICE_URL')
     try:
-        r = requests.get(catalog_url+'?catalog={}'.format(catalog_name), timeout=1)
+        r = requests.get(catalog_url+'?catalog={}'.format(catalog_name), timeout=10)
         if r.status_code == 200:
             print('Catalog {} Loaded'.format(catalog_name).upper())
             return r.json()
