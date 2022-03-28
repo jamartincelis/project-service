@@ -30,18 +30,25 @@ def rule_signal(sender, instance, created, **kwargs):
     path = 'users/{}/projects/{}/activities/'.format(instance.user, instance.project.id)
     rule_type = get_rule_type_object(instance.rule_type)
     if created:
-        mensaje = "Regla {} creada.".format(rule_type['name'])
+        message = "Regla {} creada.".format(rule_type['name'])
+        icon = '/assets/xerpa/global/img/icons/add_circle.svg'
     elif not created:
-        mensaje = "Regla {} actualizada.".format(rule_type['name'])
+        if instance.status == '94bcd197-0d33-40e4-8793-78aa42ad3220':
+            message = "Regla {} pausada.".format(rule_type['name'])
+            icon = '/assets/xerpa/global/img/icons/pause_circle.svg'
+        else:
+            message = "Regla {} actualizada.".format(rule_type['name'])
+            icon = '/assets/xerpa/global/img/icons/edit_circle.svg'
     payload = {
         "user": str(instance.user),
         "project": str(instance.project),
         "rule": str(instance.id),
         "project_name": instance.project.name,
         "amount": float(instance.amount),
-        "title": mensaje,
-        "message": mensaje,
+        "title": message,
+        "message": message,
         "rule_name": rule_type['name'],
-        "activity_type": "E"
+        "activity_type": "E",
+        "icon": icon
     }
     requests.post('{}{}'.format(service_url,path), json=payload, timeout=3)

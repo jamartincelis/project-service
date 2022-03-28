@@ -99,6 +99,7 @@ def create_activity(rules):
             "title": "Regla {} creada.".format(rule_type['name']),
             "message": "Regla {} creada.".format(rule_type['name']),
             "rule_name": rule_type['name'],
-            "activity_type": "E"
+            "activity_type": "E",
+            "icon": "/assets/xerpa/global/img/icons/add_circle.svg"
         }
         requests.post('{}{}'.format(service_url,path), json=payload, timeout=3)
