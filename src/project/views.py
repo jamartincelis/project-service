@@ -47,6 +47,9 @@ class ProjectDetail(RetrieveUpdateAPIView):
 
 
 class Savings(APIView):
+    """
+    Regresa el total ahorrado por el usuario en todas sus metas
+    """
 
     def get(self, request, user):
         return Response(

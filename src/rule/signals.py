@@ -38,7 +38,7 @@ def rule_signal(sender, instance, created, **kwargs):
         "project": str(instance.project),
         "rule": str(instance.id),
         "project_name": instance.project.name,
-        "amount": instance.amount,
+        "amount": float(instance.amount),
         "title": mensaje,
         "message": mensaje,
         "rule_name": rule_type['name'],

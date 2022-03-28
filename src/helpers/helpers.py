@@ -95,7 +95,7 @@ def create_activity(rules):
             "project": str(rule.project),
             "rule": str(rule.id),
             "project_name": rule.project.name,
-            "amount": rule.amount,
+            "amount": float(rule.amount),
             "title": "Regla {} creada.".format(rule_type['name']),
             "message": "Regla {} creada.".format(rule_type['name']),
             "rule_name": rule_type['name'],
