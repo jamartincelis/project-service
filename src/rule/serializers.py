@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from project.helpers import catalog_to_dict
+from helpers.helpers import catalog_to_dict
 
 from rule.models import Rule
 

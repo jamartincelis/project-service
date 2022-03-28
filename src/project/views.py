@@ -1,5 +1,7 @@
 from os import environ
 
+from django.db.models import Sum
+
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateAPIView
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -7,7 +9,8 @@ from rest_framework import status
 
 from project.models import Project
 from project.serializers import ProjectSerializer
-from project.helpers import get_catalog, validate_accounts
+
+from helpers.helpers import get_catalog, validate_accounts
 
 
 class ProjectList(ListCreateAPIView):
@@ -43,7 +46,10 @@ class ProjectDetail(RetrieveUpdateAPIView):
             return Response('Project not found.', status=status.HTTP_200_OK)
 
 
-class NewProjectWidget(APIView):
+class Savings(APIView):
 
-    def get(self, request):
-        return Response(get_catalog('project_type'), status=status.HTTP_200_OK)
+    def get(self, request, user):
+        return Response(
+            Project.objects.filter(user=user).aggregate(Sum('progress')),
+            status=status.HTTP_200_OK
+        )

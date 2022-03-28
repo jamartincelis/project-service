@@ -23,7 +23,7 @@ def project_signal(sender, instance, created, **kwargs):
         "user": str(instance.user),
         "project": str(instance.id),
         "project_name": instance.name,
-        "amount": instance.total,
+        "amount": float(instance.total),
         "title": mensaje,
         "message": mensaje,
         "activity_type": "E",

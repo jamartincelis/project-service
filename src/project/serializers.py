@@ -6,13 +6,11 @@ from rest_framework import serializers
 from rest_framework.response import Response
 
 from project.models import Project
-from project.helpers import catalog_to_dict
 
 from rule.models import Rule
 from rule.serializers import RuleSerializer
-from rule.helpers import create_activity
 
-from .helpers import validate_accounts
+from helpers.helpers import validate_accounts, catalog_to_dict, create_activity
 
 
 class ProjectSerializer(serializers.ModelSerializer):

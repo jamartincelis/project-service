@@ -5,24 +5,9 @@ import requests
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+from helpers.helpers import catalog_to_dict
+
 from rule.models import Rule
-
-
-def catalog_to_dict(catalog_name):
-    """
-    Consulta un catálogo y lo convierte a diccionario para simular un sistema de cache propio del
-    proyecto y evitar consultas http masivas
-    """
-    catalog_url = environ.get('CATALOG_SERVICE_URL')
-    try:
-        r = requests.get(catalog_url+'?catalog={}'.format(catalog_name)).json()
-        data = {}
-        for item in r[catalog_name]:
-            data[item['id']] = item
-        print('CATALOG DATA LOADED')
-        return data
-    except requests.exceptions.RequestException:
-        return {}
 
 
 # catalogos de tipos de regla
