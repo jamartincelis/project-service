@@ -18,7 +18,7 @@ from django.urls import path, include
 
 
 urlpatterns = [
-    path('project-service/monitoring/', include('monitoring.urls')),
-    path('project-service/users/<str:user>/projects/', include('project.urls')),
-    path('project-service/users/<str:user>/projects/<str:project>/rules/', include('rule.urls')),
+    path('monitoring/', include('monitoring.urls')),
+    path('users/<str:user>/projects/', include('project.urls')),
+    path('users/<str:user>/projects/<str:project>/rules/', include('rule.urls')),
 ]
