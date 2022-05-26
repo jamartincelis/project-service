@@ -11,8 +11,3 @@ class TestProjectUrls(TestCase):
         url = reverse('detail', args=[constants.USER, constants.PROJECT])
         self.assertEqual(url, constants.URL_PROJECT_DETAIL.format(
             constants.USER, constants.PROJECT))
-
-    def test_resolution_for_new_project_widget(self):
-        url = reverse('new-project-widget', args=[constants.USER])
-        self.assertEqual(url, constants.URL_NEW_PROJECT_WIDGET.format(
-            constants.USER))
